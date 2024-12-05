@@ -29,14 +29,18 @@ export default function Dashboard() {
     }
 
     const updateTask = (taskText, newState) => {
-        const updatedTasks = tasks.map(task => 
-            task.text === taskText 
-                ? { ...task, ...newState }
-                : task
-        );
-        console.log('Updating task:', taskText, 'with state:', newState);
-        console.log('Updated tasks:', updatedTasks);
-        setTasks(updatedTasks);
+        setTasks(prevTasks => {
+            if (newState.isDeleted) {
+                // Remove task permanently
+                return prevTasks.filter(task => task.text !== taskText);
+            }
+            // Update task state
+            return prevTasks.map(task => 
+                task.text === taskText 
+                    ? { ...task, ...newState }
+                    : task
+            );
+        });
     }
 
     return(
@@ -45,11 +49,7 @@ export default function Dashboard() {
             <PlusButton onCLick={openModal} />
             <Pager activeButton={activeButton} setActiveButton={setActiveButton} />
             <SectionName />
-            <ItemList 
-                tasks={tasks} 
-                activeButton={activeButton} 
-                updateTask={updateTask}
-            />
+            <ItemList tasks={tasks} activeButton={activeButton} updateTask={updateTask} />
             {isModalOpen && <AddDialog onClose={closeModal} onAddTask={addTask}/>}
         </div>
     );

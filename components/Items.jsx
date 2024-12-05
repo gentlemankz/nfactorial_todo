@@ -11,7 +11,18 @@ export default function Items({ task, updateTask }) {
     };
 
     const handleDelete = () => {
-        updateTask(task.text, { isTrash: true });
+        if (task.isTrash) {
+            // Delete forever
+            updateTask(task.text, { isDeleted: true });
+        } else {
+            // Move to trash
+            updateTask(task.text, { isTrash: true });
+        }
+        setShowDialog(false);
+    };
+
+    const handleMoveBackToTodo = () => {
+        updateTask(task.text, { isTrash: false });
         setShowDialog(false);
     };
 
@@ -44,7 +55,11 @@ export default function Items({ task, updateTask }) {
             </motion.div>
             {showDialog && (
                 <div className="absolute left-0 top-full mt-2 z-50">
-                    <AdditinalDialog onClose={() => setShowDialog(false)} onDelete={handleDelete} />
+                    <AdditinalDialog 
+                        onDelete={handleDelete}
+                        onMoveBack={handleMoveBackToTodo}
+                        isTrash={task.isTrash}
+                    />
                 </div>
             )}
         </div>
