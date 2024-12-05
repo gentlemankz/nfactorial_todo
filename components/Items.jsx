@@ -1,10 +1,27 @@
 import Icon from "./Icon";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import AdditinalDialog from "./AdditinalDialog";
 
 export default function Items({ task, updateTask }) {
     const [showDialog, setShowDialog] = useState(false);
+    const dialogRef = useRef(null);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (dialogRef.current && !dialogRef.current.contains(event.target)) {
+                setShowDialog(false);
+            }
+        }
+
+        if (showDialog) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+        
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [showDialog]);
 
     const handleIconClick = () => {
         updateTask(task.text, { isCompleted: !task.isCompleted });
@@ -12,10 +29,8 @@ export default function Items({ task, updateTask }) {
 
     const handleDelete = () => {
         if (task.isTrash) {
-            // Delete forever
             updateTask(task.text, { isDeleted: true });
         } else {
-            // Move to trash
             updateTask(task.text, { isTrash: true });
         }
         setShowDialog(false);
@@ -54,7 +69,7 @@ export default function Items({ task, updateTask }) {
                 </h2>
             </motion.div>
             {showDialog && (
-                <div className="absolute left-0 top-full mt-2 z-50">
+                <div ref={dialogRef} className="absolute left-0 top-full mt-2 z-50">
                     <AdditinalDialog 
                         onDelete={handleDelete}
                         onMoveBack={handleMoveBackToTodo}
