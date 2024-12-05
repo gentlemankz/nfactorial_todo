@@ -32,10 +32,8 @@ export default function Dashboard() {
     const updateTask = (taskText, newState) => {
         setTasks(prevTasks => {
             if (newState.isDeleted) {
-                // Remove task permanently
                 return prevTasks.filter(task => task.text !== taskText);
             }
-            // Update task state
             return prevTasks.map(task => 
                 task.text === taskText 
                     ? { ...task, ...newState }
@@ -49,7 +47,7 @@ export default function Dashboard() {
             <TitleMain />
             <PlusButton onCLick={openModal} />
             <Pager activeButton={activeButton} setActiveButton={setActiveButton} />
-            <SectionName />
+            <SectionName activeButton={activeButton} />
             <ItemList tasks={tasks} activeButton={activeButton} updateTask={updateTask} />
             {isModalOpen && <AddDialog onClose={closeModal} onAddTask={addTask}/>}
             <Footer />

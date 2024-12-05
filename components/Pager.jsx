@@ -8,9 +8,9 @@ export default function Pager({ activeButton, setActiveButton }) {
 
   return (
     <div className="flex flex-start ml-20 mt-[102px]">
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row gap-4 font-medium">
         <button 
-          className={getButtonClass('todo')}
+          className={getButtonClass('todo') }
           onClick={() => setActiveButton('todo')}
         >
           To Do
