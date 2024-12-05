@@ -54,7 +54,7 @@ export default function Items({ task, updateTask }) {
                     <img 
                         src="/vector.png" 
                         className="w-[2.5px] h-[10px]"
-                        alt="" 
+                        alt="vector" 
                     />
                 </button>
                 <div>

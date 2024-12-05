@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import Items from "./Items";
 
 export default function ItemList({ tasks, activeButton, updateTask }) {
@@ -17,9 +18,9 @@ export default function ItemList({ tasks, activeButton, updateTask }) {
 
     return (
         <div className="flex flex-col ml-[56px] mt-6 gap-4">
-            {filteredTasks.map((task, index) => (
+            {filteredTasks.map((task) => (
                 <Items 
-                    key={index} 
+                    key={uuidv4()} 
                     task={task} 
                     updateTask={updateTask}
                 />
