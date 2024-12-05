@@ -2,24 +2,13 @@ import { useState } from "react";
 import Icon from "./Icon";
 import { motion } from "framer-motion";
 
-export default function Items({ task, onStateChange }) {
-    const [isCompleted, setIsCompleted] = useState(false);
-    const [currentState, setCurrentState] = useState("todo"); // States: todo, done, trash
-
+export default function Items({ task, updateTask }) {
     const handleIconClick = () => {
-        setIsCompleted(!isCompleted);
-        if (!isCompleted) {
-            setCurrentState("done");
-            onStateChange && onStateChange(task, "done");
-        } else {
-            setCurrentState("todo");
-            onStateChange && onStateChange(task, "todo");
-        }
+        updateTask(task.text, { isCompleted: !task.isCompleted });
     };
 
     const handleDelete = () => {
-        setCurrentState("trash");
-        onStateChange && onStateChange(task, "trash");
+        updateTask(task.text, { isTrash: true });
     };
 
     return (
@@ -38,16 +27,16 @@ export default function Items({ task, onStateChange }) {
                 />
             </button>
             <div>
-                <Icon onClick={handleIconClick} isCompleted={isCompleted} />
+                <Icon onClick={handleIconClick} isCompleted={task.isCompleted} />
             </div>
             <h2
                 className={`flex-grow ${
-                    isCompleted ? "line-through text-gray-400" : "text-black"
+                    task.isCompleted ? "line-through text-gray-400" : "text-black"
                 } transition-all duration-300`}
             >
-                {task}
+                {task.text}
             </h2>
-            {currentState !== "trash" && (
+            {!task.isTrash && (
                 <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
