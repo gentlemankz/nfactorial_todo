@@ -6,6 +6,7 @@ import SectionName from "@/components/SectionName";
 import TitleMain from "@/components/TitleMain";
 import { useState } from "react";
 import AddDialog from "@/components/AddDialog";
+import Footer from "@/components/Footer";
 
 export default function Dashboard() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,6 +52,7 @@ export default function Dashboard() {
             <SectionName />
             <ItemList tasks={tasks} activeButton={activeButton} updateTask={updateTask} />
             {isModalOpen && <AddDialog onClose={closeModal} onAddTask={addTask}/>}
+            <Footer />
         </div>
     );
 }
