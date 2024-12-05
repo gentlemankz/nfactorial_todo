@@ -4,7 +4,7 @@ import { useState } from "react";
 import AdditinalDialog from "./AdditinalDialog";
 
 export default function Items({ task, updateTask }) {
-    const [showModal, setShowModal] = useState(false);
+    const [showDialog, setShowDialog] = useState(false);
 
     const handleIconClick = () => {
         updateTask(task.text, { isCompleted: !task.isCompleted });
@@ -12,6 +12,7 @@ export default function Items({ task, updateTask }) {
 
     const handleDelete = () => {
         updateTask(task.text, { isTrash: true });
+        setShowDialog(false);
     };
 
     return (
@@ -23,7 +24,7 @@ export default function Items({ task, updateTask }) {
                 exit={{ opacity: 0, x: -100 }}
                 transition={{ duration: 0.3 }}
             >
-                <button onClick={() => setShowModal(!showModal)}>
+                <button onClick={() => setShowDialog(!showDialog)}>
                     <img 
                         src="/vector.png" 
                         className="w-[2.5px] h-[10px]"
@@ -40,20 +41,10 @@ export default function Items({ task, updateTask }) {
                 >
                     {task.text}
                 </h2>
-                {!task.isTrash && (
-                    <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={handleDelete}
-                        className="text-red-500 hover:text-red-600 px-2"
-                    >
-                        🗑️
-                    </motion.button>
-                )}
             </motion.div>
-            {showModal && (
+            {showDialog && (
                 <div className="absolute left-0 top-full mt-2 z-50">
-                    <AdditinalDialog onClose={() => setShowModal(false)} onDelete={handleDelete} />
+                    <AdditinalDialog onClose={() => setShowDialog(false)} onDelete={handleDelete} />
                 </div>
             )}
         </div>
