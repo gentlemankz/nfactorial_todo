@@ -20,7 +20,7 @@ export default function ItemList({ tasks, activeButton, updateTask }) {
         <div className="flex flex-col ml-[56px] mt-6 gap-4">
             {filteredTasks.map((task) => (
                 <Items 
-                    key={uuidv4()} 
+                    key={task._id} 
                     task={task} 
                     updateTask={updateTask}
                 />

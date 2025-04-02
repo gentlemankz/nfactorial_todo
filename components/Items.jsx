@@ -24,20 +24,20 @@ export default function Items({ task, updateTask }) {
     }, [showDialog]);
 
     const handleIconClick = () => {
-        updateTask(task.text, { isCompleted: !task.isCompleted });
+        updateTask(task._id, { isCompleted: !task.isCompleted });
     };
 
     const handleDelete = () => {
         if (task.isTrash) {
-            updateTask(task.text, { isDeleted: true });
+            updateTask(task._id, { isDeleted: true });
         } else {
-            updateTask(task.text, { isTrash: true });
+            updateTask(task._id, { isTrash: true });
         }
         setShowDialog(false);
     };
 
     const handleMoveBackToTodo = () => {
-        updateTask(task.text, { isTrash: false });
+        updateTask(task._id, { isTrash: false });
         setShowDialog(false);
     };
 
